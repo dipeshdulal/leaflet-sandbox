@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leaflet Maps Learning</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+      crossorigin=""
+    ></script>
+
+    <style>
+      #mapid {
+        height: 500px;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="mapid"></div>
+
+    <script>
+      var locations = [
+        { lat: 27.354712, long: 87.667488, location: "Taplejung" },
+        { lat: 27.686386, long: 83.432426, location: "Butwal" },
+        { lat: 28.98728, long: 80.165184, location: "Bhimdatta" },
+      ];
+
+      var mymap = L.map("mapid");
+
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      }).addTo(mymap);
+
+      const points = locations.map((point) => [point.lat, point.long]);
+      mymap.fitBounds(points);
+      for (var i = 0; i < points.length; i++) {
+        L.marker(points[i]).addTo(mymap).bindPopup(locations[i].location);
+      }
+
+      L.polyline(points, {color: 'red'}).addTo(mymap);
+    </script>
+  </body>
+</html>
